@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Theme Chooser</string>
     <string name="app_title">Theme Chooser</string>
+    <string name="apply">Apply</string>
 </resources>
