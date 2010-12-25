@@ -21,7 +21,9 @@ import com.tmobile.themes.provider.Themes;
 import com.tmobile.themes.widget.ThemeAdapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,6 +47,9 @@ public class ThemeChooser extends Activity {
 
     private ThemeChooserAdapter mAdapter;
 
+    private static final int DIALOG_APPLY = 0;
+    private final ChangeThemeHelper mChangeHelper = new ChangeThemeHelper(this, DIALOG_APPLY);
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -57,10 +62,41 @@ public class ThemeChooser extends Activity {
 
         mGallery = (Gallery)findViewById(R.id.gallery);
         mGallery.setAdapter(mAdapter);
+        mGallery.setSelection(mAdapter.getMarkedPosition());
         mGallery.setOnItemSelectedListener(mItemSelected);
 
         Button button = (Button)findViewById(R.id.apply);
         button.setOnClickListener(mApplyClicked);
+
+        mChangeHelper.dispatchOnCreate();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mChangeHelper.dispatchOnConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onResume() {
+        mChangeHelper.dispatchOnResume();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mChangeHelper.dispatchOnPause();
+        super.onPause();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return mChangeHelper.dispatchOnCreateDialog(id);
+    }
+
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        mChangeHelper.dispatchOnPrepareDialog(id, dialog);
     }
 
     private final OnItemSelectedListener mItemSelected = new OnItemSelectedListener() {
@@ -83,6 +119,7 @@ public class ThemeChooser extends Activity {
             ThemeItem item = (ThemeItem)mGallery.getItemAtPosition(selectedPos);
             Uri uri = item.getUri(ThemeChooser.this);
             Log.i(TAG, "Sending request to change to '" + item.getName() + "' (" + uri + ")");
+            mChangeHelper.beginChange(item.getName());
             Themes.changeTheme(ThemeChooser.this, uri);
         }
     };

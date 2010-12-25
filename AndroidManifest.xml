@@ -31,7 +31,8 @@
         <activity android:name=".ThemeChooser"
             android:label="@string/app_title"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            pluto:handleThemeConfigChanges="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
