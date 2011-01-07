@@ -30,7 +30,12 @@ public class ChangeThemeHelper {
     private final Activity mContext;
     private final int mDialogId;
 
-    /** Tracked to trap theme change configuration events */
+    /**
+     * Tracked to trap theme change configuration events. Note that this could
+     * be null if the current theme is operating off the "booted" theme (that
+     * is, the Configuration object we got has an uninitialized customTheme
+     * member).
+     */
     private CustomTheme mCurrentTheme;
 
     /**
@@ -66,7 +71,8 @@ public class ChangeThemeHelper {
          * rather than present a UI with a potentially stale theme applied.
          */
         CustomTheme newTheme = newConfig.customTheme;
-        if (!CustomTheme.nullSafeEquals(newTheme, mCurrentTheme)) {
+        if (newTheme != null &&
+                (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             mHandler.scheduleFinish("Theme config change, closing!");
         }
     }
