@@ -21,6 +21,7 @@ import com.tmobile.themes.provider.Themes;
 import com.tmobile.themes.widget.ThemeAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -48,6 +49,8 @@ public class ThemeChooser extends Activity {
     private ThemeChooserAdapter mAdapter;
 
     private static final int DIALOG_APPLY = 0;
+    private static final int DIALOG_MISSING_HOST_DENSITY = 1;
+    private static final int DIALOG_MISSING_THEME_PACKAGE_SCOPE = 2;
     private final ChangeThemeHelper mChangeHelper = new ChangeThemeHelper(this, DIALOG_APPLY);
 
     @Override
@@ -91,7 +94,23 @@ public class ThemeChooser extends Activity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        return mChangeHelper.dispatchOnCreateDialog(id);
+        AlertDialog.Builder builder;
+        switch (id) {
+            case DIALOG_MISSING_HOST_DENSITY:
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.dialog_theme_error_title);
+                builder.setMessage(R.string.dialog_missing_host_density_msg);
+                builder.setPositiveButton(R.string.dialog_bummer_btn, null);
+                return builder.create();
+            case DIALOG_MISSING_THEME_PACKAGE_SCOPE:
+                builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.dialog_theme_error_title);
+                builder.setMessage(R.string.dialog_missing_theme_package_scope_msg);
+                builder.setPositiveButton(android.R.string.ok, null);
+                return builder.create();
+            default:
+                return mChangeHelper.dispatchOnCreateDialog(id);
+        }
     }
 
     @Override
@@ -117,6 +136,14 @@ public class ThemeChooser extends Activity {
         public void onClick(View v) {
             int selectedPos = mGallery.getSelectedItemPosition();
             ThemeItem item = (ThemeItem)mGallery.getItemAtPosition(selectedPos);
+            if (!item.hasHostDensity()) {
+                showDialog(DIALOG_MISSING_HOST_DENSITY);
+                return;
+            }
+            if (!item.hasThemePackageScope()) {
+                showDialog(DIALOG_MISSING_THEME_PACKAGE_SCOPE);
+                return;
+            }
             Uri uri = item.getUri(ThemeChooser.this);
             Log.i(TAG, "Sending request to change to '" + item.getName() + "' (" + uri + ")");
             mChangeHelper.beginChange(item.getName());

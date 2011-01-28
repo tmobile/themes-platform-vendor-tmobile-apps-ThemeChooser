@@ -22,4 +22,9 @@
 
     <string name="theme_change_dialog_title">Applying...</string>
     <string name="switching_to_theme">Switching to <xliff:g id="theme">%s</xliff:g>...</string>
+
+    <string name="dialog_theme_error_title">Theme error</string>
+    <string name="dialog_missing_host_density_msg">Sorry, this theme is missing assets for your device\'s screen size.</string>
+    <string name="dialog_missing_theme_package_scope_msg">This theme was improperly compiled and cannot be applied.  Please report this incident to the theme author.</string>
+    <string name="dialog_bummer_btn">Bummer</string>
 </resources>

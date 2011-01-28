@@ -204,9 +204,11 @@ public class ChangeThemeHelper {
     }
 
     public void dispatchOnPrepareDialog(int id, Dialog dialog) {
-        if (mApplyingName != null) {
-            ((ProgressDialog)dialog).setMessage(mContext.getResources().getString(
-                    R.string.switching_to_theme, mApplyingName));
+        if (id == mDialogId) {
+            if (mApplyingName != null) {
+                ((ProgressDialog)dialog).setMessage(mContext.getResources().getString(
+                        R.string.switching_to_theme, mApplyingName));
+            }
         }
     }
 
