@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.Uri;
@@ -100,7 +101,14 @@ public class ThemeChooser extends Activity {
                 builder = new AlertDialog.Builder(this);
                 builder.setTitle(R.string.dialog_theme_error_title);
                 builder.setMessage(R.string.dialog_missing_host_density_msg);
-                builder.setPositiveButton(R.string.dialog_bummer_btn, null);
+                builder.setPositiveButton(R.string.dialog_apply_anyway_btn, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        int selectedPos = mGallery.getSelectedItemPosition();
+                        ThemeItem item = (ThemeItem)mGallery.getItemAtPosition(selectedPos);
+                        doApply(item);
+                    }
+                });
+                builder.setNegativeButton(R.string.dialog_bummer_btn, null);
                 return builder.create();
             case DIALOG_MISSING_THEME_PACKAGE_SCOPE:
                 builder = new AlertDialog.Builder(this);
@@ -144,12 +152,16 @@ public class ThemeChooser extends Activity {
                 showDialog(DIALOG_MISSING_THEME_PACKAGE_SCOPE);
                 return;
             }
-            Uri uri = item.getUri(ThemeChooser.this);
-            Log.i(TAG, "Sending request to change to '" + item.getName() + "' (" + uri + ")");
-            mChangeHelper.beginChange(item.getName());
-            Themes.changeTheme(ThemeChooser.this, uri);
+            doApply(item);
         }
     };
+
+    private void doApply(ThemeItem item) {
+        Uri uri = item.getUri(ThemeChooser.this);
+        Log.i(TAG, "Sending request to change to '" + item.getName() + "' (" + uri + ")");
+        mChangeHelper.beginChange(item.getName());
+        Themes.changeTheme(ThemeChooser.this, uri);
+    }
 
     private static class ThemeChooserAdapter extends ThemeAdapter {
         public ThemeChooserAdapter(Activity context) {

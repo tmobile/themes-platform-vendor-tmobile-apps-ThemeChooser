@@ -26,5 +26,6 @@
     <string name="dialog_theme_error_title">Theme error</string>
     <string name="dialog_missing_host_density_msg">Sorry, this theme is missing assets for your device\'s screen size.</string>
     <string name="dialog_missing_theme_package_scope_msg">This theme was improperly compiled and cannot be applied.  Please report this incident to the theme author.</string>
+    <string name="dialog_apply_anyway_btn">Apply anyway</string>
     <string name="dialog_bummer_btn">Bummer</string>
 </resources>
