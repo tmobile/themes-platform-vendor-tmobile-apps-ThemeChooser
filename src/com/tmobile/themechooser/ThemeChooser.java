@@ -160,7 +160,11 @@ public class ThemeChooser extends Activity {
         Uri uri = item.getUri(ThemeChooser.this);
         Log.i(TAG, "Sending request to change to '" + item.getName() + "' (" + uri + ")");
         mChangeHelper.beginChange(item.getName());
-        Themes.changeTheme(ThemeChooser.this, uri);
+        if (getResources().getBoolean(R.bool.config_change_style_only)) {
+            Themes.changeStyle(ThemeChooser.this, uri);
+        } else {
+            Themes.changeTheme(ThemeChooser.this, uri);
+        }
     }
 
     private static class ThemeChooserAdapter extends ThemeAdapter {
