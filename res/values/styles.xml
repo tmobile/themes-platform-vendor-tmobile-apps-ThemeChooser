@@ -21,4 +21,20 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+
+    <style name="ChooserText.Title">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_marginTop">@dimen/choosertext_title_marginTop</item>
+    </style>
+
+    <style name="ChooserText.Position">
+        <item name="android:layout_marginBottom">@dimen/choosertext_position_marginBottom</item>
+    </style>
+
+    <style name="ChooserApply">
+        <item name="android:layout_marginTop">@dimen/chooserapply_marginTop</item>
+        <item name="android:layout_marginBottom">@dimen/chooserapply_marginBottom</item>
+        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingRight">30dp</item>
+    </style>
 </resources>

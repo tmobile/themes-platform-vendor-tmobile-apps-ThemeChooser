@@ -23,10 +23,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:gravity="center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        style="@style/ChooserText"
+        style="@style/ChooserText.Title"
         android:text="@string/app_title"
         />
 
@@ -34,9 +32,8 @@
         android:id="@+id/adapter_position"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:gravity="center_horizontal"
-        style="@style/ChooserText"
+        style="@style/ChooserText.Position"
         />
 
     <FrameLayout
@@ -68,12 +65,9 @@
         android:id="@+id/apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="20dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
         android:layout_gravity="center_horizontal"
         android:text="@string/apply"
+        style="@style/ChooserApply"
         />
 
 </LinearLayout>
