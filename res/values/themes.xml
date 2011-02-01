@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- # Copyright (C) 2010, T-Mobile USA, Inc.
+ # Copyright (C) 2011, T-Mobile USA, Inc.
  #
  # Licensed under the Apache License, Version 2.0 (the "License");
  # you may not use this file except in compliance with the License.
@@ -15,16 +15,8 @@
  # limitations under the License.
  -->
 
-<com.tmobile.themechooser.ReflectionLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:id="@+id/theme_preview"
-        android:layout_width="170dp"
-        android:layout_height="283dp"
-        android:scaleType="fitXY"
-        android:background="@android:color/black"
-        />
-
-</com.tmobile.themechooser.ReflectionLayout>
+<resources>
+    <style name="Chooser" parent="android:style/Theme.NoTitleBar">
+        <item name="android:windowBackground">@drawable/chooser_bg</item>
+    </style>
+</resources>

@@ -18,30 +18,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <Gallery
-        android:id="@+id/gallery"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spacing="2dp"
-        android:unselectedAlpha="1"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/ChooserText"
+        android:text="@string/app_title"
         />
 
     <TextView
-        android:id="@+id/theme_name"
-        android:layout_width="wrap_content"
+        android:id="@+id/adapter_position"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center_horizontal"
+        style="@style/ChooserText"
         />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+        <Gallery
+            android:id="@+id/gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spacing="2dp"
+            android:unselectedAlpha="0.5"
+            />
+
+        <TextView
+            android:id="@+id/theme_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="305dp"
+            android:layout_gravity="top"
+            android:gravity="center_horizontal"
+            style="@style/ChooserText"
+            />
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/apply"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_gravity="center_horizontal"
         android:text="@string/apply"
         />
 

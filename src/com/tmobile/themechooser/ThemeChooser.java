@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class ThemeChooser extends Activity {
 
     private Gallery mGallery;
     private TextView mThemeNameView;
+    private TextView mCurrentPositionView;
 
     private ThemeChooserAdapter mAdapter;
 
@@ -59,6 +61,7 @@ public class ThemeChooser extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.main);
 
+        mCurrentPositionView = (TextView)findViewById(R.id.adapter_position);
         mThemeNameView = (TextView)findViewById(R.id.theme_name);
 
         mAdapter = new ThemeChooserAdapter(this);
@@ -129,6 +132,7 @@ public class ThemeChooser extends Activity {
     private final OnItemSelectedListener mItemSelected = new OnItemSelectedListener() {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ThemeItem item = (ThemeItem)parent.getItemAtPosition(position);
+            mCurrentPositionView.setText((position + 1) + "/" + parent.getCount());
             String text = item.getName();
             if (mAdapter.getMarkedPosition() == position) {
                 text += " (current)";
@@ -174,19 +178,29 @@ public class ThemeChooser extends Activity {
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            return LayoutInflater.from(context).inflate(R.layout.theme_item, parent, false);
+            View row = LayoutInflater.from(context).inflate(R.layout.theme_item, parent, false);
+            row.setTag(new ViewHolder(row));
+            return row;
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
             ThemeItem themeItem = mDAOItem;
-            ImageView vv = (ImageView)view;
-            vv.setImageURI(themeItem.getPreviewUri());
+            ViewHolder holder = (ViewHolder)view.getTag();
+            holder.preview.setImageURI(themeItem.getPreviewUri());
         }
 
         @Override
         public Object getItem(int position) {
             return getDAOItem(position);
+        }
+    }
+
+    private static class ViewHolder {
+        public ImageView preview;
+
+        public ViewHolder(View row) {
+            preview = (ImageView)row.findViewById(R.id.theme_preview);
         }
     }
 }
