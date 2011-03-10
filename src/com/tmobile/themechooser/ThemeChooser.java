@@ -16,6 +16,7 @@
 
 package com.tmobile.themechooser;
 
+import com.tmobile.themes.ThemeManager;
 import com.tmobile.themes.provider.ThemeItem;
 import com.tmobile.themes.provider.Themes;
 import com.tmobile.themes.widget.ThemeAdapter;
@@ -25,22 +26,22 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class ThemeChooser extends Activity {
     private static final String TAG = ThemeChooser.class.getSimpleName();
@@ -64,8 +65,9 @@ public class ThemeChooser extends Activity {
         mCurrentPositionView = (TextView)findViewById(R.id.adapter_position);
         mThemeNameView = (TextView)findViewById(R.id.theme_name);
 
+        Uri currentTheme = getIntent().getParcelableExtra(ThemeManager.EXTRA_THEME_EXISTING_URI);
         mAdapter = new ThemeChooserAdapter(this);
-        mAdapter.setUseAutomaticMarking(true, null);
+        mAdapter.setUseAutomaticMarking(true, currentTheme);
 
         mGallery = (Gallery)findViewById(R.id.gallery);
         mGallery.setAdapter(mAdapter);
@@ -156,7 +158,13 @@ public class ThemeChooser extends Activity {
                 showDialog(DIALOG_MISSING_THEME_PACKAGE_SCOPE);
                 return;
             }
-            doApply(item);
+            if (Intent.ACTION_PICK.equals(getIntent().getAction())) {
+                Intent i = new Intent(null, item.getUri(ThemeChooser.this));
+                setResult(Activity.RESULT_OK, i);
+                finish();
+            } else {
+                doApply(item);
+            }
         }
     };
 
