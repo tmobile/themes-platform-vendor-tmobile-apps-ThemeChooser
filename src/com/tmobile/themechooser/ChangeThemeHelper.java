@@ -11,8 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.CustomTheme;
+import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -194,7 +197,8 @@ public class ChangeThemeHelper {
     public Dialog dispatchOnCreateDialog(int id) {
         if (id == mDialogId) {
             ProgressDialog dialog = new ProgressDialog(mContext);
-            dialog.setTitle(R.string.theme_change_dialog_title);
+            dialog.setTitle(getThemeChooserResources(mContext).getString(
+                    R.string.theme_change_dialog_title));
             dialog.setCancelable(false);
             dialog.setIndeterminate(true);
             return dialog;
@@ -206,10 +210,36 @@ public class ChangeThemeHelper {
     public void dispatchOnPrepareDialog(int id, Dialog dialog) {
         if (id == mDialogId) {
             if (mApplyingName != null) {
-                ((ProgressDialog)dialog).setMessage(mContext.getResources().getString(
+                ((ProgressDialog)dialog).setMessage(
+                        getThemeChooserResources(mContext).getString(
                         R.string.switching_to_theme, mApplyingName));
             }
         }
+    }
+
+    /**
+     * Return the resources compiled with the ThemeChooser package, so that
+     * ChangeThemeHelper may be compiled into other packages without forcing
+     * the other packages to duplicate ThemeChooser resources.
+     *
+     * @param context - The context of the application using ChangeThemeHelper
+     * @return - Handle to ThemeChooser resources
+     */
+    private static Resources getThemeChooserResources(Context context) {
+        Resources res;
+        String resourcePackageName = R.class.getPackage().getName();
+        String callerPackageName = context.getPackageName();
+        if (callerPackageName.equals(resourcePackageName)) {
+            res = context.getResources();
+        } else {
+            PackageManager pm = context.getPackageManager();
+            try {
+                res = pm.getResourcesForApplication(resourcePackageName);
+            } catch (NameNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return res;
     }
 
     public void beginChange(String applyingName) {
