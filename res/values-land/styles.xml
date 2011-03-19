@@ -16,13 +16,18 @@
  -->
 
 <resources>
-    <dimen name="chooserheader_marginTop">6dp</dimen>
-    <dimen name="chooserheader_marginBottom">6dp</dimen>
+    <style name="ComposedTitle">
+        <item name="android:orientation">horizontal</item>
+    </style>
 
-    <dimen name="choosertext_marginTop">305dp</dimen>
-    <dimen name="chooserapply_marginTop">8dp</dimen>
-    <dimen name="chooserapply_marginBottom">2dp</dimen>
+    <style name="ChooserText.Title">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginRight">20dp</item>
+    </style>
 
-    <dimen name="preview_vert_size">283dp</dimen>
+    <style name="ChooserText.Position">
+        <item name="android:layout_width">wrap_content</item>
+    </style>
 
 </resources>

@@ -60,30 +60,58 @@ public class ThemeChooser extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView(R.layout.main);
-
-        mCurrentPositionView = (TextView)findViewById(R.id.adapter_position);
-        mThemeNameView = (TextView)findViewById(R.id.theme_name);
 
         Uri currentTheme = getIntent().getParcelableExtra(ThemeManager.EXTRA_THEME_EXISTING_URI);
         mAdapter = new ThemeChooserAdapter(this);
         mAdapter.setUseAutomaticMarking(true, currentTheme);
 
+        inflateActivity();
+
+        mGallery.setSelection(mAdapter.getMarkedPosition());
+        mChangeHelper.dispatchOnCreate();
+    }
+
+    private void inflateActivity() {
+        setContentView(R.layout.main);
+
+        mCurrentPositionView = (TextView)findViewById(R.id.adapter_position);
+        mThemeNameView = (TextView)findViewById(R.id.theme_name);
+
         mGallery = (Gallery)findViewById(R.id.gallery);
         mGallery.setAdapter(mAdapter);
-        mGallery.setSelection(mAdapter.getMarkedPosition());
         mGallery.setOnItemSelectedListener(mItemSelected);
 
         Button button = (Button)findViewById(R.id.apply);
         button.setOnClickListener(mApplyClicked);
-
-        mChangeHelper.dispatchOnCreate();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mChangeHelper.dispatchOnConfigurationChanged(newConfig);
+        // Handle config changes ourselves, to avoid possible race condition
+        // during theme change when app gets torn down and rebuilt due
+        // to orientation change.
+        boolean finishing = mChangeHelper.dispatchOnConfigurationChanged(newConfig);
+
+        // If it's an orientation change and not a theme change,
+        // re-inflate ThemeChooser with its new resources
+        if (!finishing) {
+            // re-inflating will cause our list positions and selections
+            // to be lost, so request all Views in the window save their
+            // instance state first.
+            Bundle state = new Bundle();
+            onSaveInstanceState(state);
+
+            // Set the adapter null, so that on reinflating mGallery,
+            // the previous mDataSetObserver gets unregistered, and we
+            // don't leak a reference to the gallery on each config change.
+            mGallery.setAdapter(null);
+            inflateActivity();
+
+            // Now have window restore previous instance state... just as
+            // though it went through onDestroy/onCreate process.
+            onRestoreInstanceState(state);
+        }
     }
 
     @Override
@@ -134,7 +162,8 @@ public class ThemeChooser extends Activity {
     private final OnItemSelectedListener mItemSelected = new OnItemSelectedListener() {
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ThemeItem item = (ThemeItem)parent.getItemAtPosition(position);
-            mCurrentPositionView.setText((position + 1) + "/" + parent.getCount());
+            mCurrentPositionView.setText(getString(R.string.item_count,
+                    (position + 1), mAdapter.getCount()));
             String text = item.getName();
             if (mAdapter.getMarkedPosition() == position) {
                 text += " (current)";
@@ -195,7 +224,8 @@ public class ThemeChooser extends Activity {
         public void bindView(View view, Context context, Cursor cursor) {
             ThemeItem themeItem = mDAOItem;
             ViewHolder holder = (ViewHolder)view.getTag();
-            holder.preview.setImageURI(themeItem.getPreviewUri());
+            int orientation = context.getResources().getConfiguration().orientation;
+            holder.preview.setImageURI(themeItem.getPreviewUri(orientation));
         }
 
         @Override

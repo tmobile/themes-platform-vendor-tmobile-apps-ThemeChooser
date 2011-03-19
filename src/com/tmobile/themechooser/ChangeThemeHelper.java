@@ -64,7 +64,7 @@ public class ChangeThemeHelper {
         mCurrentTheme = mContext.getResources().getConfiguration().customTheme;
     }
 
-    public void dispatchOnConfigurationChanged(Configuration newConfig) {
+    public boolean dispatchOnConfigurationChanged(Configuration newConfig) {
         /**
          * It is necessary to detect theme changes in this way (as well as via
          * the broadcast) in order to handle the case where the user leaves the
@@ -72,12 +72,18 @@ public class ChangeThemeHelper {
          * the theme change event is received by this activity (when it is
          * brought back to the foreground), we need to finish automatically
          * rather than present a UI with a potentially stale theme applied.
+         *
+         * @param newConfig
+         * @return boolean finishing - true if finish() is scheduled
          */
+        boolean finishing = false;
         CustomTheme newTheme = newConfig.customTheme;
         if (newTheme != null &&
                 (mCurrentTheme == null || !mCurrentTheme.equals(newTheme))) {
             mHandler.scheduleFinish("Theme config change, closing!");
+            finishing = true;
         }
+        return finishing;
     }
 
     public void dispatchOnPause() {

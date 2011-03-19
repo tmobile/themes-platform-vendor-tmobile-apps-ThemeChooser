@@ -22,6 +22,7 @@
 
     <string name="theme_change_dialog_title">Applying...</string>
     <string name="switching_to_theme">Switching to <xliff:g id="theme">%s</xliff:g>...</string>
+    <string name="item_count">%1$d/%2$d</string>
 
     <string name="dialog_theme_error_title">Theme error</string>
     <string name="dialog_missing_host_density_msg">Sorry, this theme is missing assets for your device\'s screen size.</string>

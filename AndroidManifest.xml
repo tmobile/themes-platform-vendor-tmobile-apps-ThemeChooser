@@ -33,7 +33,6 @@
             android:label="@string/app_title"
             android:theme="@style/Chooser"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
             pluto:handleThemeConfigChanges="true">
 
             <intent-filter>

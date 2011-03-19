@@ -16,13 +16,11 @@
  -->
 
 <resources>
-    <dimen name="chooserheader_marginTop">6dp</dimen>
-    <dimen name="chooserheader_marginBottom">6dp</dimen>
+    <dimen name="chooserheader_marginTop">10dp</dimen>
+    <dimen name="chooserheader_marginBottom">12dp</dimen>
 
-    <dimen name="choosertext_marginTop">305dp</dimen>
-    <dimen name="chooserapply_marginTop">8dp</dimen>
-    <dimen name="chooserapply_marginBottom">2dp</dimen>
+    <dimen name="choosertext_marginTop">162dp</dimen>
 
-    <dimen name="preview_vert_size">283dp</dimen>
+    <dimen name="preview_vert_size">150dp</dimen>
 
 </resources>

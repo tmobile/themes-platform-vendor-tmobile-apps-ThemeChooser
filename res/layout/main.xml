@@ -20,21 +20,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/chooserheader_marginTop"
+        android:layout_marginBottom="@dimen/chooserheader_marginBottom"
         android:gravity="center_horizontal"
-        style="@style/ChooserText.Title"
-        android:text="@string/app_title"
-        />
+        style="@style/ComposedTitle" >
 
-    <TextView
-        android:id="@+id/adapter_position"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        style="@style/ChooserText.Position"
-        />
+        <TextView
+            style="@style/ChooserText.Title"
+            android:text="@string/app_title" />
+
+        <TextView
+            android:id="@+id/adapter_position"
+            style="@style/ChooserText.Position" />
+
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,8 +54,7 @@
         <TextView
             android:id="@+id/theme_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="305dp"
+            android:layout_marginTop="@dimen/choosertext_marginTop"
             android:layout_gravity="top"
             android:gravity="center_horizontal"
             style="@style/ChooserText"
