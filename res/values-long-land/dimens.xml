@@ -16,8 +16,8 @@
  -->
 
 <resources>
-    <dimen name="chooserheader_marginTop">12dp</dimen>
-    <dimen name="chooserheader_marginBottom">12dp</dimen>
-    <dimen name="chooserapply_marginTop">8dp</dimen>
-    <dimen name="chooserapply_marginBottom">20dp</dimen>
+    <dimen name="chooserheader_marginTop">6dp</dimen>
+    <dimen name="chooserheader_marginBottom">6dp</dimen>
+    <dimen name="chooserapply_marginTop">4dp</dimen>
+    <dimen name="chooserapply_marginBottom">4dp</dimen>
 </resources>
