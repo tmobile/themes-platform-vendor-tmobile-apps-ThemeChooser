@@ -21,6 +21,6 @@
 
     <dimen name="choosertext_marginTop">162dp</dimen>
 
-    <dimen name="preview_vert_size">150dp</dimen>
-
+    <dimen name="preview_height_size">150dp</dimen>
+    <dimen name="preview_width_size">250dp</dimen>
 </resources>

@@ -23,6 +23,7 @@
     <dimen name="chooserapply_marginTop">8dp</dimen>
     <dimen name="chooserapply_marginBottom">2dp</dimen>
 
-    <dimen name="preview_vert_size">283dp</dimen>
+    <dimen name="preview_height_size">300dp</dimen>
+    <dimen name="preview_width_size">180dp</dimen>
 
 </resources>

@@ -41,7 +41,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="8dp">
 
         <Gallery
             android:id="@+id/gallery"
@@ -54,8 +55,8 @@
         <TextView
             android:id="@+id/theme_name"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/choosertext_marginTop"
-            android:layout_gravity="top"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="bottom"
             android:gravity="center_horizontal"
             style="@style/ChooserText"
             />
