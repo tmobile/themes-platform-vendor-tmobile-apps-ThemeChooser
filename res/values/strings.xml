@@ -16,17 +16,17 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Theme Chooser</string>
-    <string name="app_title">Theme Chooser</string>
-    <string name="apply">Apply</string>
+    <string name="app_name">Sélecteur de thème</string>
+    <string name="app_title">Sélecteur de thème</string>
+    <string name="apply">Appliquer</string>
 
-    <string name="theme_change_dialog_title">Applying...</string>
-    <string name="switching_to_theme">Switching to <xliff:g id="theme">%s</xliff:g>...</string>
+    <string name="theme_change_dialog_title">Application...</string>
+    <string name="switching_to_theme">Changement vers <xliff:g id="theme">%s</xliff:g>...</string>
     <string name="item_count">%1$d/%2$d</string>
 
-    <string name="dialog_theme_error_title">Theme error</string>
-    <string name="dialog_missing_host_density_msg">Sorry, this theme is missing assets for your device\'s screen size.</string>
-    <string name="dialog_missing_theme_package_scope_msg">This theme was improperly compiled and cannot be applied.  Please report this incident to the theme author.</string>
-    <string name="dialog_apply_anyway_btn">Apply anyway</string>
-    <string name="dialog_bummer_btn">Bummer</string>
+    <string name="dialog_theme_error_title">Erreur du thème</string>
+    <string name="dialog_missing_host_density_msg">Désolé, ce thème est indisponible pour cet appareil ou cette taille d'écran</string>
+    <string name="dialog_missing_theme_package_scope_msg">Ce thème a été mal compilé et ne peut pas être appliquée. S'il vous plaît signaler l'incident à l'auteur du thème.</string>
+    <string name="dialog_apply_anyway_btn">Appliquer quand même</string>
+    <string name="dialog_bummer_btn">Dommage</string>
 </resources>
